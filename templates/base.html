@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+</head>
+<body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+        {% block footer %}
+        
+        {% endblock %}
+    </div>
+<script>
+    function updateColor(){
+        var red = $("#R").val();
+        var green = $("#G").val();
+        var blue = $("#B").val();
+        $("#colorblock").css("background-color","rgb("+red+","+green+","+blue+")");
+    }
+    function checkInput(){
+        $("#R").change(updateColor);
+        $("#G").change(updateColor);
+        $("#B").change(updateColor);
+    }
+    setInterval(updateColor, 500)
+</script>
+</body>
+</html>
