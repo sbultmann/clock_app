@@ -16,7 +16,7 @@ def hello():
         G = str(form.G.data)
         B = str(form.B.data)
         RGB = HEADER + R + "." + G + "." + B
-        ser = serial.Serial('/dev/cu.usbserial-1420', 9600, timeout=1)
+        ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
         RGB=bytes(RGB, encoding='utf-8')
         time.sleep(5)
         ser.write(RGB)
