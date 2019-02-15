@@ -3,6 +3,9 @@ from forms import ColorForm
 import os
 import serial
 import time
+
+from text_render import render_text_columns
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(16)
 
@@ -11,11 +14,16 @@ app.config['SECRET_KEY'] = os.urandom(16)
 def hello():
     form = ColorForm()
     if form.validate_on_submit():
-        HEADER = "X"
+        HEADER = "X" if len(form.msg.data) < 1 else 'M'
         R = str(form.R.data)
         G = str(form.G.data)
         B = str(form.B.data)
         RGB = HEADER + R + "." + G + "." + B
+
+        if len(form.msg.data) > 0:
+            le_columns = render_text_columns(str(form.msg.data))
+            RGB += ',' + ','.join(map(str, le_columns));
+
         ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
         RGB=bytes(RGB, encoding='utf-8')
         time.sleep(5)
